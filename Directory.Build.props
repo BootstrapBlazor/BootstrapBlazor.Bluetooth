@@ -1,0 +1,28 @@
+<Project>
+	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+        <Copyright>Alex Chow</Copyright>
+        <Authors>Alex Chow</Authors>
+        <Company>Densen Informatica</Company>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="logo.png" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <Version>6.9.10</Version>
+        <PackageIcon>logo.png</PackageIcon> 
+        <NoWarn>1701;1702;1705;1591</NoWarn>
+        <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
+    </PropertyGroup>
+   
+</Project>

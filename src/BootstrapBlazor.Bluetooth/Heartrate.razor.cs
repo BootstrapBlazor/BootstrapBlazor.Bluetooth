@@ -89,7 +89,7 @@ public partial class Heartrate : IAsyncDisposable
     }
 
     /// <summary>
-    /// 连接心率带
+    /// 停止监听心率
     /// </summary>
     public virtual async Task StopHeartrate()
     {

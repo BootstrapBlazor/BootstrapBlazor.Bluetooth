@@ -139,7 +139,7 @@
         </member>
         <member name="M:BootstrapBlazor.Components.Heartrate.StopHeartrate">
             <summary>
-            连接心率带
+            停止监听心率
             </summary>
         </member>
         <member name="M:BootstrapBlazor.Components.Heartrate.UpdateDevicename(System.String)">
@@ -185,19 +185,14 @@
             获得/设置 打印按钮文字 默认为 打印
             </summary>
         </member>
-        <member name="P:BootstrapBlazor.Components.Printer.Placeholder">
-            <summary>
-            获得/设置 占位符
-            </summary>
-        </member>
         <member name="P:BootstrapBlazor.Components.Printer.Opt">
             <summary>
             获得/设置 PrinterOption
             </summary>
         </member>
-        <member name="P:BootstrapBlazor.Components.Printer.Cpcl">
+        <member name="P:BootstrapBlazor.Components.Printer.Commands">
             <summary>
-            cpcl代码
+            打印指令
             </summary>
             <returns></returns>
         </member>
@@ -231,9 +226,9 @@
             获得/设置 设备名称
             </summary>
         </member>
-        <member name="M:BootstrapBlazor.Components.Printer.PrintQR">
+        <member name="M:BootstrapBlazor.Components.Printer.Print">
             <summary>
-            打印QR码
+            打印
             </summary>
         </member>
         <member name="M:BootstrapBlazor.Components.Printer.GetResult(BootstrapBlazor.Components.PrinterOption,System.String)">

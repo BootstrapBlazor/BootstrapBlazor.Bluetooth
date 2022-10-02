@@ -71,7 +71,7 @@ public class PrinterOption
     /// 数据切片大小,默认100
     /// </summary>
     /// <returns></returns>
-    [DisplayName("数据切片大小")]
+    [DisplayName("数据切片大小,默认100")]
     public int MaxChunk { get; set; } = 100;
 }
 

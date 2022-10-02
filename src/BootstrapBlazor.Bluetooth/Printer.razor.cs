@@ -34,32 +34,26 @@ public partial class Printer : IAsyncDisposable
     public string? PrintButtonText { get; set; } = "打印";
 
     /// <summary>
-    /// 获得/设置 占位符
-    /// </summary>
-    [Parameter]
-    public string Placeholder { get; set; } = "";
-
-    /// <summary>
     /// 获得/设置 PrinterOption
     /// </summary>
     [Parameter]
     public PrinterOption Opt { get; set; } = new PrinterOption();
 
     /// <summary>
-    /// cpcl代码
+    /// 打印指令
     /// </summary>
     /// <returns></returns>
-    [DisplayName("cpcl代码")]
-    public string? Cpcl { get; set; } = @"! 10 200 200 400 1
+    [DisplayName("打印指令")]
+    public string? Commands { get; set; } = @"! 10 200 200 400 1
 BEEP 1
 PW 380
 SETMAG 1 1
 CENTER
-TEXT 10 2 10 40 Loranca Bar
-TEXT 12 3 10 75 DaydayGO
+TEXT 10 2 10 40 Micro Bar
+TEXT 12 3 10 75 Blazor
 TEXT 10 2 10 350 eMenu
 B QR 30 150 M 2 U 7
-MA,https://app1.es/1121
+MA,https://google.com
 ENDQR
 FORM
 PRINT
@@ -121,13 +115,13 @@ PRINT
     }
 
     /// <summary>
-    /// 打印QR码
+    /// 打印
     /// </summary>
-    public virtual async Task PrintQR()
+    public virtual async Task Print()
     {
         try
-        { 
-            await module!.InvokeVoidAsync("printFunction", InstancePrinter, PrinterElement, Opt, "write", Cpcl);
+        {
+            await module!.InvokeVoidAsync("printFunction", InstancePrinter, PrinterElement, Opt, "write", Commands);
         }
         catch (Exception e)
         {
@@ -203,7 +197,7 @@ PRINT
         try
         {
             if (devicename!=null) Opt.Devicename = devicename;
-            await module!.InvokeVoidAsync("connectdevice", InstancePrinter, PrinterElement, Opt, Cpcl);
+            await module!.InvokeVoidAsync("connectdevice", InstancePrinter, PrinterElement, Opt, Commands);
         }
         catch (Exception e)
         {

@@ -10,7 +10,7 @@ https://blazor.app1.es/printer
 
 1. nuget包
 
-    ```BootstrapBlazor.Printer```
+    ```BootstrapBlazor.Bluetooth```
 
 2. _Imports.razor 文件 或者页面添加 添加组件库引用
 

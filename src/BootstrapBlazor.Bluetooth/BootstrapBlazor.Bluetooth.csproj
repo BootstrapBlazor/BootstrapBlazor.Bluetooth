@@ -6,8 +6,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <PackageProjectUrl>https://github.com/densen2014/BootstrapBlazor.Bluetooth</PackageProjectUrl>
         <RepositoryUrl>https://github.com/densen2014/BootstrapBlazor.Bluetooth</RepositoryUrl>
-        <PackageTags>Bootstrap Blazor Bluetooth /Printer Components 蓝牙组件库</PackageTags>
-        <Description>Bootstrap UI Bluetooth /Printer components experience</Description>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>Bootstrap Blazor Bluetooth /Printer Components 蓝牙和打印组件库</PackageTags>
+        <Description>Bootstrap UI Bluetooth/Printer components experience</Description>
         <AssemblyName>BootstrapBlazor.Bluetooth</AssemblyName>
         <RootNamespace>BootstrapBlazor.Bluetooth</RootNamespace>
         <AssemblyOriginatorKeyFile>..\keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>

@@ -1,5 +1,9 @@
 ## Blazor Bluetooth & Printer 蓝牙和打印 组件
 
+#### 1. 蓝牙打印机 Printer  
+#### 2. 蓝牙心率带  Heart rate 
+#### 3. 蓝牙设备电量 Battery Level
+
 ### 示例
 
 https://www.blazor.zone/btprinter
@@ -88,6 +92,9 @@ https://blazor.app1.es/btprinter
 
 ## Blazor Printer component
 
+#### 1. Printer  
+#### 2. Heart rate 
+#### 3. Battery Level
 
 ### Demo
 

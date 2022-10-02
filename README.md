@@ -6,9 +6,9 @@
 
 ### 示例
 
-https://www.blazor.zone/btprinter
+https://www.blazor.zone/bluetooth
 
-https://blazor.app1.es/btprinter
+https://blazor.app1.es/bluetooth
 
 ## 使用方法:
 
@@ -86,7 +86,7 @@ https://blazor.app1.es/btprinter
 
     <https://www.blazor.zone>
 
-    <https://www.blazor.zone/btprinter>
+    <https://www.blazor.zone/bluetooth>
 
 ----
 
@@ -98,9 +98,9 @@ https://blazor.app1.es/btprinter
 
 ### Demo
 
-https://www.blazor.zone/btprinter
+https://www.blazor.zone/bluetooth
 
-https://blazor.app1.es/btprinter
+https://blazor.app1.es/bluetooth
 
 ## Instructions:
 
@@ -179,5 +179,5 @@ Based on the Bootstrap style library, it is carefully built, and 100 a variety o
 
     <https://www.blazor.zone>
 
-    <https://www.blazor.zone/printer>
+    <https://www.blazor.zone/bluetooth>
 

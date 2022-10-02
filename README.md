@@ -1,10 +1,10 @@
-## Blazor Printer 打印 组件 (WebAPI)
+## Blazor Bluetooth & Printer 蓝牙和打印 组件
 
 ### 示例
 
-https://www.blazor.zone/printer
+https://www.blazor.zone/btprinter
 
-https://blazor.app1.es/printer
+https://blazor.app1.es/btprinter
 
 ## 使用方法:
 
@@ -19,28 +19,61 @@ https://blazor.app1.es/printer
 
 3. Razor页面
 
+    蓝牙打印机 BT Printer  
+    <https://github.com/densen2014/Densen.Extensions/blob/master/Demo/DemoShared/Pages/BtPrinterPage.razor>
+
     ```
     @using BootstrapBlazor.Components
+    
+    <Printer OnResult="OnResult" ShowUI="true" Debug="true" />
+ 
+    ```
 
-    @code{
-        string BindValue = "virtualkeyboard"; 
-    }
-
-    <input class="@ClassName"
-              data-kioskboard-type="@KeyboardType.all.ToString()"
-              data-kioskboard-specialcharacters="true"
-              placeholder="全键盘" />
-    <input class="@ClassName"
-           data-kioskboard-type="@KeyboardType.keyboard.ToString()"
-           data-kioskboard-placement="@KeyboardPlacement.bottom.ToString()"
-           placeholder="字母键盘" />
-    <input class="@ClassName"
-           data-kioskboard-type="@KeyboardType.numpad.ToString()"
-           data-kioskboard-placement="@(KeyboardPlacement.bottom.ToString())"
-           placeholder="数字键盘" />
-    <OnScreenKeyboard ClassName="@ClassName" />
+    蓝牙心率带  
+    <https://github.com/densen2014/Densen.Extensions/blob/master/Demo/DemoShared/Pages/BtHeartratePage.razor>
 
     ```
+    @using BootstrapBlazor.Components
+    
+    <button class="btn btn-outline-secondary" @onclick="GetHeartrate ">查询心率</button>
+    <button class="btn btn-outline-secondary" @onclick="StopHeartrate ">停止读取</button>
+    <Heartrate @ref="heartrate" OnUpdateValue="OnUpdateValue" />
+    <h2 style="color:red" data-action="heartrate"/>
+ 
+    @code{
+        Heartrate heartrate { get; set; } = new Heartrate();
+        private int? value;
+        
+        private Task OnUpdateValue(int value)
+        {
+            this.value = value;
+            StateHasChanged();
+            return Task.CompletedTask;
+        }
+    }
+    ```
+
+    蓝牙设备电量  
+    <https://github.com/densen2014/Densen.Extensions/blob/master/Demo/DemoShared/Pages/BtBatteryLevelPage.razor>
+    ```
+    @using BootstrapBlazor.Components
+    
+    <button class="btn btn-outline-secondary" @onclick="GetBatteryLevel ">查询电量</button>
+    <BatteryLevel @ref="batteryLevel" OnUpdateValue="OnUpdateValue" />
+    <pre>@message</pre>
+
+    @code{
+        Heartrate heartrate { get; set; } = new Heartrate();
+        private int? value;
+        
+        private Task OnUpdateValue(decimal value)
+        {
+            this.value = value;
+            this.statusmessage = $"设备电量{value}%";
+            StateHasChanged();
+            return Task.CompletedTask;
+        }
+    }
 
 4. 更多信息请参考
 
@@ -49,7 +82,7 @@ https://blazor.app1.es/printer
 
     <https://www.blazor.zone>
 
-    <https://www.blazor.zone/printer>
+    <https://www.blazor.zone/btprinter>
 
 ----
 
@@ -58,15 +91,15 @@ https://blazor.app1.es/printer
 
 ### Demo
 
-https://www.blazor.zone/printer
+https://www.blazor.zone/btprinter
 
-https://blazor.app1.es/printer
+https://blazor.app1.es/btprinter
 
 ## Instructions:
 
 1. NuGet install pack 
 
-    `BootstrapBlazor.Printer`
+    `BootstrapBlazor.Bluetooth`
 
 2. _Imports.razor or Razor page
 
@@ -75,26 +108,62 @@ https://blazor.app1.es/printer
    ```
 3. Razor page
 
-    ```
-    @code{
-        string BindValue = "printer"; 
-    }
+    BT Printer  
+    <https://github.com/densen2014/Densen.Extensions/blob/master/Demo/DemoShared/Pages/BtPrinterPage.razor>
 
-    <input class="@ClassName"
-           data-kioskboard-type="@KeyboardType.all.ToString()"
-           data-kioskboard-specialcharacters="true"
-           placeholder="Full Keyboard" />
+    ```
+    @using BootstrapBlazor.Components
+    
+    <Printer OnResult="OnResult" ShowUI="true" Debug="true" />
  
-    <input class="@ClassName"
-           data-kioskboard-type="@KeyboardType.keyboard.ToString()"
-           data-kioskboard-placement="@KeyboardPlacement.bottom.ToString()"
-           placeholder="Keyboard" />
-
-    <input class="@ClassName"
-           data-kioskboard-type="@KeyboardType.numpad.ToString()"
-           data-kioskboard-placement="@(KeyboardPlacement.bottom.ToString())"
-           placeholder="Numpad" />
     ```
+
+    Heart rate  
+    
+    <https://github.com/densen2014/Densen.Extensions/blob/master/Demo/DemoShared/Pages/BtHeartratePage.razor>
+
+    ```
+    @using BootstrapBlazor.Components
+    
+    <button class="btn btn-outline-secondary" @onclick="GetHeartrate ">查询心率</button>
+    <button class="btn btn-outline-secondary" @onclick="StopHeartrate ">停止读取</button>
+    <Heartrate @ref="heartrate" OnUpdateValue="OnUpdateValue" />
+    <h2 style="color:red" data-action="heartrate"/>
+ 
+    @code{
+        Heartrate heartrate { get; set; } = new Heartrate();
+        private int? value;
+        
+        private Task OnUpdateValue(int value)
+        {
+            this.value = value;
+            StateHasChanged();
+            return Task.CompletedTask;
+        }
+    }
+    ```
+
+    Battery Level  
+    <https://github.com/densen2014/Densen.Extensions/blob/master/Demo/DemoShared/Pages/BtBatteryLevelPage.razor>
+    ```
+    @using BootstrapBlazor.Components
+    
+    <button class="btn btn-outline-secondary" @onclick="GetBatteryLevel ">查询电量</button>
+    <BatteryLevel @ref="batteryLevel" OnUpdateValue="OnUpdateValue" />
+    <pre>@message</pre>
+
+    @code{
+        Heartrate heartrate { get; set; } = new Heartrate();
+        private int? value;
+        
+        private Task OnUpdateValue(decimal value)
+        {
+            this.value = value;
+            this.statusmessage = $"设备电量{value}%";
+            StateHasChanged();
+            return Task.CompletedTask;
+        }
+    }
 
 4.  More informations
 

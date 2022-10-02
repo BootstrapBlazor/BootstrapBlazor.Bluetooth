@@ -4,20 +4,14 @@
         <TargetFrameworks>net6.0</TargetFrameworks>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <PackageProjectUrl>https://github.com/densen2014/BootstrapBlazor.Printer</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/densen2014/BootstrapBlazor.Printer</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/densen2014/BootstrapBlazor.Bluetooth</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/densen2014/BootstrapBlazor.Bluetooth</RepositoryUrl>
         <PackageTags>Bootstrap Blazor Bluetooth /Printer Components 蓝牙组件库</PackageTags>
         <Description>Bootstrap UI Bluetooth /Printer components experience</Description>
         <AssemblyName>BootstrapBlazor.Bluetooth</AssemblyName>
         <RootNamespace>BootstrapBlazor.Bluetooth</RootNamespace>
         <AssemblyOriginatorKeyFile>..\keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Content Remove="WebAPI\BatteryStatus.cs" />
-      <Content Remove="WebAPI\NetworkInfoStatus.cs" />
-      <Content Remove="WebAPI\WebApi.razor.cs" />
-    </ItemGroup>
     
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0" />

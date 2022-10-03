@@ -107,6 +107,7 @@ PRINT
                 //Opt.NamePrefix = "BMAU";
                 //可选设置服务UUID/ServiceUUID,默认0xff00.[非空!]
                 Opt.ServiceUuid = "e7810a71-73ae-499d-8c15-faa9aef0c3f2";
+                //Opt.FiltersServices =new object[] { 0xff00, 0xfee7, "e7810a71-73ae-499d-8c15-faa9aef0c3f2" };
                 Opt.ServiceUuid = Opt.ServiceUuid ?? 0xff00;
                 await module.InvokeVoidAsync("printFunction", InstancePrinter, PrinterElement,Opt);
             }

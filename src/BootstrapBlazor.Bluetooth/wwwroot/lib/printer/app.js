@@ -186,14 +186,17 @@ export function printFunction(wrapper, element, opt = null, callfunction = null,
             var option = {
                 //acceptAllDevices: true,
                 //"filters": [{
-                //    "namePrefix": "BMAU"
+                //    namePrefix: "BMAU"
+                //    services: [0x1234, 0x12345678, '99999999-0000-1000-8000-00805f9b34fb']
                 //}],
                 //optionalServices: [opt.serviceUuid]
             }
             if (opt.serviceUuid)
                 option.optionalServices = [opt.serviceUuid];
             if (opt.namePrefix)
-                option.filters = [{ "namePrefix": opt.namePrefix }];
+                option.filters = [{namePrefix: opt.namePrefix }];
+            else if (opt.filtersServices)
+                option.filters = [{ services: opt.filtersServices }];
             else
                 option.acceptAllDevices = true;
 

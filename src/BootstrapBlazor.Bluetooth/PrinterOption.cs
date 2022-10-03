@@ -65,6 +65,9 @@ public class PrinterOption
     /// <returns></returns>
     [DisplayName("服务UUID / Service UUID")]
     public object? ServiceUuid { get; set; } = 0xff00;
+    
+    [DisplayName("服务筛选器")]
+    public object? FiltersServices { get; set; } = null;
 
     /// <summary>
     /// 特征UUID / Characteristic UUID

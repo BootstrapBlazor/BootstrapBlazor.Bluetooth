@@ -52,7 +52,15 @@ public class PrinterOption
     // 蓝牙设备描述符  MyDescriptor  myDescriptor.writeValue(buffer) 
 
     /// <summary>
-    /// 服务UUID / Service UUID
+    /// 服务UUID/ServiceUUID, 默认0xff00. [非空!]<para></para>
+    /// 常见打印机ServiceUUID:<para></para>
+    /// 0000ff00-0000-1000-8000-00805f9b34fb => 0xff00<para></para>
+    /// e7810a71-73ae-499d-8c15-faa9aef0c3f2<para></para>
+    /// 0000fee7-0000-1000-8000-00805f9b34fb<para></para>
+    /// 其他设备ServiceUUID:<para></para>
+    /// 'heart_rate'<para></para>
+    /// 0x1802<para></para>
+    /// 0x1803<para></para>
     /// </summary>
     /// <returns></returns>
     [DisplayName("服务UUID / Service UUID")]

@@ -188,10 +188,12 @@ export function printFunction(wrapper, element, opt = null, callfunction = null,
                 //"filters": [{
                 //    "namePrefix": "BMAU"
                 //}],
-                optionalServices: [opt.serviceUuid]
+                //optionalServices: [opt.serviceUuid]
             }
+            if (opt.serviceUuid)
+                option.optionalServices = [opt.serviceUuid];
             if (opt.namePrefix)
-                option.filters = '[{ "namePrefix": "' + opt.namePrefix + '"}]';
+                option.filters = [{ "namePrefix": opt.namePrefix }];
             else
                 option.acceptAllDevices = true;
 

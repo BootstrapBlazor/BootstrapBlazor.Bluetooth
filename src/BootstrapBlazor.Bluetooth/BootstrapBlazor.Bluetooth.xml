@@ -312,10 +312,14 @@
         <member name="P:BootstrapBlazor.Components.PrinterOption.ServiceUuid">
             <summary>
             服务UUID/ServiceUUID, 默认0xff00. [非空!]<para></para>
-            常见打印机ServiceUUID:<para></para>
-            0000ff00-0000-1000-8000-00805f9b34fb => 0xff00<para></para>
-            e7810a71-73ae-499d-8c15-faa9aef0c3f2<para></para>
-            0000fee7-0000-1000-8000-00805f9b34fb<para></para>
+            常见打印机ServiceUUID:
+            <para>[通用型号/BMAU32/QR380A]</para>
+            0000ff00-0000-1000-8000-00805f9b34fb => 0xff00
+            <para>[InnerPrinter商米内置/BlueToothPrinter/FK-POSP58A+]</para>
+            e7810a71-73ae-499d-8c15-faa9aef0c3f2
+            <para>[HM-A300]</para>
+            0000fee7-0000-1000-8000-00805f9b34fb
+            <para></para>
             其他设备ServiceUUID:<para></para>
             'heart_rate'<para></para>
             0x1802<para></para>

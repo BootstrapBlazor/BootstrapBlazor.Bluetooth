@@ -46,6 +46,7 @@ export function printFunction(wrapper, element, opt = null, callfunction = null,
     const btnConnectdevice = element.querySelector("[data-action=btnConnectdevice]");
     const selectDevices = element.querySelector("[data-action=selectDevices]");
     const devicename = element.querySelector("[data-action=devicename]");
+    const serviceUuid = element.querySelector("[data-action=serviceUuid]");
 
     if (callfunction && callfunction == "write") {
         console.log('start WriteChunk');
@@ -191,8 +192,11 @@ export function printFunction(wrapper, element, opt = null, callfunction = null,
                 //}],
                 //optionalServices: [opt.serviceUuid]
             }
-            if (opt.serviceUuid)
+            if (serviceUuid && serviceUuid.value.length>0)
+                option.optionalServices = [serviceUuid.value];
+            else if (opt.serviceUuid)
                 option.optionalServices = [opt.serviceUuid];
+            
             if (opt.namePrefix)
                 option.filters = [{namePrefix: opt.namePrefix }];
             else if (opt.filtersServices)

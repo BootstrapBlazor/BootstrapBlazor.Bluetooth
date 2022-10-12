@@ -28,11 +28,37 @@
                 <button class="btn btn-outline-secondary" onclick="@(() => Print)">@PrintButtonText</button>
             </div>
         </div>
-        <hr style="width:550px;" />
-        <textarea rows="2" cols="20" data-action="barcode" class="border border-success" style="height:200px;width:550px;"></textarea>
+        <hr style="width: 70%; max-width: 550px;" />
+        ServiceUuid:
+        <input type="text" class="border border-success" data-action="serviceUuid" value="" style="width: 40%; max-width: 550px;" />
+        <br />
+        <textarea rows="2" cols="20" data-action="barcode" class="border border-success" style="height: 200px; width: 70%; max-width: 550px;"></textarea>
+
     </div>
-        }
-        @if (Debug)
-        {
-            <pre data-action="log" class="border border-success"></pre>
-        }
+}
+@if (Debug)
+{
+    <pre data-action="log" class="border border-success"></pre>
+}
+@if (ShowUI)
+{
+<pre style="background-color:lightgray">
+服务UUID/ServiceUUID, 默认0xff00
+
+常见打印机ServiceUUID:
+
+[通用型号/BMAU32/QR380A]
+0000ff00-0000-1000-8000-00805f9b34fb => 0xff00
+
+[InnerPrinter商米内置/BlueToothPrinter/FK-POSP58A+]
+e7810a71-73ae-499d-8c15-faa9aef0c3f2
+
+[HM-A300]
+0000fee7-0000-1000-8000-00805f9b34fb
+
+其他设备ServiceUUID:
+'heart_rate'
+0x1802
+0x1803
+</pre>
+}

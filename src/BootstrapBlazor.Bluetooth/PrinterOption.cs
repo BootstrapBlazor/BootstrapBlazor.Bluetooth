@@ -14,7 +14,7 @@ public enum PrinterType
     [Description("ESC指令打印机")]
     ESC,
     [Description("TSPL指令打印机")]
-    TSPL, 
+    TSPL,
 }
 public class PrinterOption
 {
@@ -23,7 +23,7 @@ public class PrinterOption
     /// </summary>
     /// <returns></returns>
     [DisplayName("打印机类型")]
-    public PrinterType? Type { get; set; }= PrinterType.CPCL;
+    public PrinterType? Type { get; set; } = PrinterType.CPCL;
 
     /// <summary>
     /// 初始搜索设备名称前缀,默认null
@@ -49,7 +49,11 @@ public class PrinterOption
     // 蓝牙设备/通用属性协议 BluetoothDevice 
     // 串行设备端口 Port 
     // 串行设备写入句柄 SerialWriter
-    // 蓝牙设备描述符  MyDescriptor  myDescriptor.writeValue(buffer) 
+    // 蓝牙设备描述符  MyDescriptor  myDescriptor.writeValue(buffer)
+
+    //> Service: e7810a71-73ae-499d-8c15-faa9aef0c3f2
+    //>> Characteristic: bef8d6c9-9c21-4c9e-b632-bd58c1009f9f
+    //>> Desc: 00002902-0000-1000-8000-00805f9b34fb
 
     /// <summary>
     /// 服务UUID/ServiceUUID, 默认0xff00. [非空!]<para></para>
@@ -57,7 +61,7 @@ public class PrinterOption
     /// <para>[通用型号/BMAU32/QR380A]</para>
     /// 0000ff00-0000-1000-8000-00805f9b34fb => 0xff00
     /// <para>[InnerPrinter商米内置/BlueToothPrinter/FK-POSP58A+]</para>
-    /// e7810a71-73ae-499d-8c15-faa9aef0c3f2
+    /// e7810a71-73ae-499d-8c15-faa9aef0c3f2<para></para>
     /// <para>[HM-A300]</para>
     /// 0000fee7-0000-1000-8000-00805f9b34fb
     /// <para></para>
@@ -69,7 +73,7 @@ public class PrinterOption
     /// <returns></returns>
     [DisplayName("服务UUID / Service UUID")]
     public object? ServiceUuid { get; set; } = 0xff00;
-    
+
     [DisplayName("服务筛选器")]
     public object? FiltersServices { get; set; } = null;
 

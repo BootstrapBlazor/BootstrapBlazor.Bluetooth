@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
     <PropertyGroup>
-        <Version>6.0.7</Version>
-    </PropertyGroup>
-
-    <PropertyGroup>
         <TargetFrameworks>net6.0</TargetFrameworks>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>6.1.0</Version>
         <PackageProjectUrl>https://github.com/densen2014/BootstrapBlazor.Bluetooth</PackageProjectUrl>
         <RepositoryUrl>https://github.com/densen2014/BootstrapBlazor.Bluetooth</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

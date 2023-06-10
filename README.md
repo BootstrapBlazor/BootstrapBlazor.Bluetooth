@@ -10,6 +10,8 @@ https://www.blazor.zone/bluetooth
 
 https://blazor.app1.es/bluetooth
 
+![image](https://github.com/densen2014/BootstrapBlazor.Bluetooth/assets/8428709/4e0cf26b-3249-4b03-82ff-fcbc09858d85)
+
 ## 使用方法:
 
 1. nuget包

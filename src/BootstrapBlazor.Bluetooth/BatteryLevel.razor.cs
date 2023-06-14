@@ -6,9 +6,6 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics.CodeAnalysis;
 
 namespace BootstrapBlazor.Components;
 

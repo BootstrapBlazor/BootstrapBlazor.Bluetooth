@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Text.Json.Serialization;
-
-namespace BootstrapBlazor.Components;
+﻿namespace BootstrapBlazor.Components;
 
 /// <summary>
 /// 蓝牙设备

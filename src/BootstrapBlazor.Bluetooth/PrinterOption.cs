@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Text.Json.Serialization;
 
 namespace BootstrapBlazor.Components;
 
@@ -16,6 +15,7 @@ public enum PrinterType
     [Description("TSPL指令打印机")]
     TSPL,
 }
+
 public class PrinterOption
 {
     /// <summary>

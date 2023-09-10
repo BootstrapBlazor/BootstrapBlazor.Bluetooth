@@ -99,8 +99,8 @@ PRINT
         {
             if (firstRender)
             {
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/lib/printer/app.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
-                await module.InvokeVoidAsync("addScript", "./_content/BootstrapBlazor.Bluetooth/lib/printer/gbk.min.js");
+                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/Printer.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                await module.InvokeVoidAsync("addScript", "./_content/BootstrapBlazor.Bluetooth/lib/gbk.min.js");
                 InstancePrinter = DotNetObjectReference.Create(this);
                 //可选设置初始搜索设备名称前缀,默认null
                 //Opt.NamePrefix = "BMAU";

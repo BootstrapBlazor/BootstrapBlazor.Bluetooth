@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>7.0.1</Version>
+        <Version>7.1.0</Version>
         <PackageProjectUrl>https://github.com/densen2014/BootstrapBlazor.Bluetooth</PackageProjectUrl>
         <RepositoryUrl>https://github.com/densen2014/BootstrapBlazor.Bluetooth</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
@@ -25,7 +25,7 @@
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0" />
-    </ItemGroup>
+    </ItemGroup> 
 
     <!-- 通过移除正常的引用并替换成固定版本的引用，达到无论如何更新都无法生效的目的。 -->
     <Target Condition="'$(TargetFramework)' == 'net6.0'" Name="ReferenceStaticLegacyPackage" BeforeTargets="CollectPackageReferences">

@@ -27,7 +27,7 @@ export function heartrate(wrapper, element, callfunction =null) {
             const device = await navigator.bluetooth.requestDevice({
                 filters: [{ services: [serviceUuid] }]
             });
-            wrapper.invokeMethodAsync('UpdateDevicename', device.devicename);
+            wrapper.invokeMethodAsync('UpdateDevicename', device.name);
 
             logII('Connecting to GATT Server...');
             const server = await device.gatt.connect();

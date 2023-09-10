@@ -16,6 +16,11 @@ public class BluetoothDevice
     public decimal? Value { get; set; }
 
     /// <summary>
+    /// 设备原始数值
+    /// </summary>
+    public string? ValueRAW { get; set; }
+
+    /// <summary>
     /// 状态
     /// </summary>
     public string? Status { get; set; }

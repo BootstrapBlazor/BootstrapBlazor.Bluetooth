@@ -8,7 +8,7 @@
             const device = await navigator.bluetooth.requestDevice({
                 filters: [{ services: ['battery_service', 'heart_rate'] }]
             });
-            wrapper.invokeMethodAsync('UpdateDevicename', device.devicename);
+            wrapper.invokeMethodAsync('UpdateDevicename', device.name);
 
             logII('Connecting to GATT Server...');
             const server = await device.gatt.connect();

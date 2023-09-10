@@ -40,7 +40,7 @@ public partial class BleNotification : IAsyncDisposable
     /// 获得/设置 数值更新回调方法
     /// </summary>
     [Parameter]
-    public Func<int, Task>? OnUpdateValue { get; set; }
+    public Func<string, Task>? OnUpdateValue { get; set; }
 
     /// <summary>
     /// 获得/设置 错误更新回调方法
@@ -53,6 +53,13 @@ public partial class BleNotification : IAsyncDisposable
     /// </summary>
     [Parameter]
     public bool Debug { get; set; }
+
+    /// <summary>
+    /// 自动连接设备
+    /// </summary>
+    [Parameter]
+    [DisplayName("自动连接设备")]
+    public bool AutoConnect { get; set; }
 
     /// <summary>
     /// 服务UUID / Service UUID
@@ -88,11 +95,22 @@ public partial class BleNotification : IAsyncDisposable
     /// <summary>
     /// 获取蓝牙低功耗设备BLE的特征通知
     /// </summary>
+    public virtual async Task GetNotification(object? serviceUuid ,object? characteristicUuid, bool autoConnect  )
+    {
+        ServiceUuid = serviceUuid;
+        CharacteristicUuid = characteristicUuid;
+        AutoConnect = autoConnect;
+        await GetNotification();
+    }
+
+    /// <summary>
+    /// 获取蓝牙低功耗设备BLE的特征通知
+    /// </summary>
     public virtual async Task GetNotification()
     {
         try
         {
-            await module!.InvokeVoidAsync("Notification", InstanceNotification, NotificationElement, "getNotification", ServiceUuid, CharacteristicUuid);
+            await module!.InvokeVoidAsync("notification", InstanceNotification, NotificationElement, "getNotification", ServiceUuid, CharacteristicUuid, AutoConnect);
         }
         catch (Exception e)
         {
@@ -107,7 +125,7 @@ public partial class BleNotification : IAsyncDisposable
     {
         try
         {
-            await module!.InvokeVoidAsync("Notification", InstanceNotification, NotificationElement, "stopNotification");
+            await module!.InvokeVoidAsync("notification", InstanceNotification, NotificationElement, "stopNotification");
         }
         catch (Exception e)
         {
@@ -142,9 +160,9 @@ public partial class BleNotification : IAsyncDisposable
     /// <param name="value"></param>
     /// <returns></returns>
     [JSInvokable]
-    public async Task UpdateValue(int value)
+    public async Task UpdateValue(string value)
     {
-        Device!.Value = value;
+        Device!.ValueRAW = value;
         if (OnUpdateValue != null) await OnUpdateValue.Invoke(value);
     }
 

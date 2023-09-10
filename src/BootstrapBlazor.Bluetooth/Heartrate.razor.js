@@ -32,7 +32,7 @@ export function heartrate(wrapper, element, callfunction =null) {
             logII('Connecting to GATT Server...');
             const server = await device.gatt.connect();
 
-            wrapper.invokeMethodAsync('UpdateStatus', 'Getting Battery Service...');
+            wrapper.invokeMethodAsync('UpdateStatus', 'Getting Heartrate Service...');
             logII('Getting Service...');
             const service = await server.getPrimaryService(serviceUuid);
 

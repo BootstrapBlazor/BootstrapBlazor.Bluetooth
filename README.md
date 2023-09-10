@@ -3,6 +3,7 @@
 #### 1. 蓝牙打印机 Printer  
 #### 2. 蓝牙心率带  Heart Rate 
 #### 3. 蓝牙设备电量 Battery Level
+#### 4. 蓝牙特征通知 Notification
 
 ### 示例
 
@@ -90,6 +91,8 @@ https://blazor.app1.es/bluetooth
 
     <https://www.blazor.zone/bluetooth>
 
+    <https://blazor.app1.es/Bluetooth>
+
 ----
 
 ## Blazor Printer component
@@ -97,6 +100,7 @@ https://blazor.app1.es/bluetooth
 #### 1. Printer  
 #### 2. Heart Rate 
 #### 3. Battery Level
+#### 4. Notification
 
 ### Demo
 
@@ -181,8 +185,9 @@ Based on the Bootstrap style library, it is carefully built, and 100 a variety o
 
     <https://www.blazor.zone>
 
-    <https://www.blazor.zone/bluetooth>
+    <https://www.blazor.zone/bluetooth> 
 
+    <https://blazor.app1.es/Bluetooth>
 
 ---
 #### Blazor 组件

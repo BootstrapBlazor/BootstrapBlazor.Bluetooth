@@ -1,6 +1,6 @@
 ﻿let device, myCharacteristic;
 
-export function notification(wrapper, element, callfunction = null, serviceUuid = 'heart_rate', characteristicUuid = 'heart_rate_measurement', autoConnect=false) {
+export function notification(wrapper, element, callfunction = null, serviceUuid = 'heart_rate', characteristicUuid = 'heart_rate_measurement', autoConnect = false, automaticComplement = false, advertisementReceived =false) {
     if (!element.id) element = document;
     const log = element.querySelector("[data-action=log]");
     const notificationValue = document.querySelector("[data-action=notificationValue]");
@@ -15,9 +15,8 @@ export function notification(wrapper, element, callfunction = null, serviceUuid 
 
     async function getNotification() {
         if (notificationValue) notificationValue.innerHTML = '--';
-        if (characteristicUuid.startsWith('0x')) {
-            characteristicUuid = parseInt(characteristicUuid);
-        }
+        serviceUuid = checkUUID(serviceUuid, automaticComplement);
+        characteristicUuid = checkUUID(characteristicUuid, automaticComplement); 
         try {
             let devices = await navigator.bluetooth.getDevices();
             if (devices.length > 0) {
@@ -47,23 +46,28 @@ export function notification(wrapper, element, callfunction = null, serviceUuid 
                 }
             }
 
-            //device.addEventListener('advertisementreceived', (event) => {
-            //    logII('Advertisement received.');
-            //    logII('  Device Name: ' + event.device.name);
-            //    logII('  Device ID: ' + event.device.id);
-            //    logII('  RSSI: ' + event.rssi);
-            //    logII('  TX Power: ' + event.txPower);
-            //    logII('  UUIDs: ' + event.uuids);
-            //    event.manufacturerData.forEach((valueDataView, key) => {
-            //        logDataView('Manufacturer', key, valueDataView);
-            //    });
-            //    event.serviceData.forEach((valueDataView, key) => {
-            //        logDataView('Service', key, valueDataView);
-            //    });
-            //});
+            if (advertisementReceived) {
+                const abortController = new AbortController();
+                device.addEventListener('advertisementreceived', (event) => {
+                    logII('Advertisement received.');
+                    // Stop watching advertisements to conserve battery life.
+                    abortController.abort();
+                    logII('  Device Name: ' + event.device.name);
+                    logII('  Device ID: ' + event.device.id);
+                    logII('  RSSI: ' + event.rssi);
+                    logII('  TX Power: ' + event.txPower);
+                    logII('  UUIDs: ' + event.uuids);
+                    event.manufacturerData.forEach((valueDataView, key) => {
+                        logDataView('Manufacturer', key, valueDataView);
+                    });
+                    event.serviceData.forEach((valueDataView, key) => {
+                        logDataView('Service', key, valueDataView);
+                    });
+                });
 
-            //logII('Watching advertisements from "' + device.name + '"...');
-            //await device.watchAdvertisements(); 
+                logII('Watching advertisements from "' + device.name + '"...');
+                await device.watchAdvertisements({ signal: abortController.signal }); 
+            }
 
             wrapper.invokeMethodAsync('UpdateDevicename', device.name);
 
@@ -86,6 +90,21 @@ export function notification(wrapper, element, callfunction = null, serviceUuid 
         } catch (error) {
             logErr('Argh! ' + error);
         }
+    }
+
+    function checkUUID(uuid, automaticComplement) {
+        if (uuid.startsWith('0x')) {
+            if (!automaticComplement) {
+                try {
+                    uuid = parseInt(uuid);
+                } catch (error) {
+                    uuid = uuid.replace('0x', '0000') + '-0000-1000-8000-00805f9b34fb';
+                }
+            } else {
+                uuid = uuid.replace('0x', '0000') + '-0000-1000-8000-00805f9b34fb';
+            }
+        }
+        return uuid;
     }
 
     async function stopNotification() {
@@ -143,3 +162,63 @@ const logDataView = (labelOfDataSource, key, valueDataView) => {
         '\n    (Hex) ' + hexString +
         '\n    (ASCII) ' + asciiString);
 };
+
+export async function scan(wrapper,allAdvertisements=true, filterName = null, filterNamePrefix=null,) {
+    let filters = [];
+
+    if (filterName) {
+        filters.push({ name: filterName });
+    }
+
+    if (filterNamePrefix) {
+        filters.push({ namePrefix: filterNamePrefix });
+    }
+
+    let options = {};
+    if (allAdvertisements) {
+        options.acceptAllAdvertisements = true;
+    } else {
+        options.filters = filters;
+    }
+
+    try {
+        logII('Requesting Bluetooth Scan with options: ' + JSON.stringify(options));
+        const scan = await navigator.bluetooth.requestLEScan(options);
+
+        logII('Scan started with:');
+        logII(' acceptAllAdvertisements: ' + scan.acceptAllAdvertisements);
+        logII(' active: ' + scan.active);
+        logII(' keepRepeatedDevices: ' + scan.keepRepeatedDevices);
+        logII(' filters: ' + JSON.stringify(scan.filters));
+
+        navigator.bluetooth.addEventListener('advertisementreceived', event => {
+            logII('Advertisement received.');
+            logII('  Device Name: ' + event.device.name);
+            logII('  Device ID: ' + event.device.id);
+            logII('  RSSI: ' + event.rssi);
+            logII('  TX Power: ' + event.txPower);
+            logII('  UUIDs: ' + event.uuids);
+            event.manufacturerData.forEach((valueDataView, key) => {
+                logDataView('Manufacturer', key, valueDataView);
+            });
+            event.serviceData.forEach((valueDataView, key) => {
+                logDataView('Service', key, valueDataView);
+            });
+        });
+
+        setTimeout(stopScan, 10000);
+        function stopScan() {
+            logII('Stopping scan...');
+            scan.stop();
+            logII('Stopped.  scan.active = ' + scan.active);
+        }
+    } catch (error) {
+        logII('Argh! ' + error);
+    }
+
+    function logII(info) {
+        console.log(info);
+        wrapper.invokeMethodAsync('UpdateStatus', info);
+    }
+
+}

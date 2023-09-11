@@ -17,12 +17,12 @@ public partial class BleNotification : IAsyncDisposable
 {
     [Inject] IJSRuntime? JS { get; set; }
     private IJSObjectReference? module;
-    private DotNetObjectReference<BleNotification>? InstanceNotification { get; set; }
+    private DotNetObjectReference<BleNotification>? Instance { get; set; }
 
     /// <summary>
     /// UI界面元素的引用对象
     /// </summary>
-    public ElementReference NotificationElement { get; set; }
+    public ElementReference Element { get; set; }
 
     /// <summary>
     /// 获得/设置 蓝牙设备
@@ -62,18 +62,33 @@ public partial class BleNotification : IAsyncDisposable
     public bool AutoConnect { get; set; }
 
     /// <summary>
+    /// 自动补全, 否则为转数字格式
+    /// </summary>
+    [Parameter]
+    [DisplayName("自动补全, 否则为转数字格式")]
+    public bool AutomaticComplement { get; set; }
+
+    /// <summary>
+    /// 显示扫描结果
+    /// </summary>
+    [Parameter]
+    [DisplayName("显示扫描结果")]
+    public bool AdvertisementReceived { get; set; }
+
+    /// <summary>
     /// 服务UUID / Service UUID
     /// </summary>
     [Parameter]
     [DisplayName("服务UUID / Service UUID")]
-    public object? ServiceUuid { get; set; } = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+    public object? ServiceUuid { get; set; } = "heart_rate";
 
     /// <summary>
     /// 特征UUID / Characteristic UUID
     /// </summary>
     /// <returns></returns>
+    [Parameter]
     [DisplayName("特征UUID / Characteristic UUID")]
-    public object? CharacteristicUuid { get; set; } = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
+    public object? CharacteristicUuid { get; set; } = "heart_rate_measurement";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -83,7 +98,7 @@ public partial class BleNotification : IAsyncDisposable
             {
                 Device??= new BluetoothDevice();
                 module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/BleNotification.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
-                InstanceNotification = DotNetObjectReference.Create(this);
+                Instance = DotNetObjectReference.Create(this);
             }
         }
         catch (Exception e)
@@ -95,11 +110,13 @@ public partial class BleNotification : IAsyncDisposable
     /// <summary>
     /// 获取蓝牙低功耗设备BLE的特征通知
     /// </summary>
-    public virtual async Task GetNotification(object? serviceUuid ,object? characteristicUuid, bool autoConnect  )
+    public virtual async Task GetNotification(object? serviceUuid ,object? characteristicUuid, bool autoConnect ,bool automaticComplement,bool advertisementReceived)
     {
         ServiceUuid = serviceUuid;
         CharacteristicUuid = characteristicUuid;
         AutoConnect = autoConnect;
+        AutomaticComplement = automaticComplement;
+        AdvertisementReceived = advertisementReceived;
         await GetNotification();
     }
 
@@ -110,7 +127,7 @@ public partial class BleNotification : IAsyncDisposable
     {
         try
         {
-            await module!.InvokeVoidAsync("notification", InstanceNotification, NotificationElement, "getNotification", ServiceUuid, CharacteristicUuid, AutoConnect);
+            await module!.InvokeVoidAsync("notification", Instance, Element, "getNotification", ServiceUuid, CharacteristicUuid, AutoConnect, AutomaticComplement, AdvertisementReceived);
         }
         catch (Exception e)
         {
@@ -125,7 +142,22 @@ public partial class BleNotification : IAsyncDisposable
     {
         try
         {
-            await module!.InvokeVoidAsync("notification", InstanceNotification, NotificationElement, "stopNotification");
+            await module!.InvokeVoidAsync("notification", Instance, Element, "stopNotification");
+        }
+        catch (Exception e)
+        {
+            if (OnUpdateError != null) await OnUpdateError.Invoke(e.Message);
+        }
+    }
+
+    /// <summary>
+    /// 停止监听BLE的特征通知
+    /// </summary>
+    public virtual async Task Scan()
+    {
+        try
+        {
+            await module!.InvokeVoidAsync("scan", Instance);
         }
         catch (Exception e)
         {
@@ -135,7 +167,7 @@ public partial class BleNotification : IAsyncDisposable
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
-        InstanceNotification?.Dispose();
+        Instance?.Dispose();
         if (module is not null)
         {
             await module.DisposeAsync();

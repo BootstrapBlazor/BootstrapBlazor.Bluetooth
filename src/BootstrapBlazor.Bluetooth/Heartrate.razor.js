@@ -67,14 +67,24 @@ export function heartrate(wrapper, element, callfunction =null) {
         let heartRates = parseHeartRate(value).heartRate;
         wrapper.invokeMethodAsync('UpdateValue', heartRates);
         logII('> ' + heartRates);
-        heartrateIcon = (heartrateIcon == '&#10084;' ? '&hearts;' : '&#10084;');
-        if (heartrate) heartrate.innerHTML = heartrateIcon + heartRates;
+        if (heartRates == -1) {
+            heartrate.innerHTML = "error";
+        } else {
+            heartrateIcon = (heartrateIcon == '&#10084;' ? '&hearts;' : '&#10084;');
+            if (heartrate) heartrate.innerHTML = heartrateIcon + heartRates;
+        }
     }
 
     function parseHeartRate(data) {
+        const result = {};
+
+        if (data.byteLength == 0) {
+            result.heartRate = -1;
+            return result;
+        }
+
         const flags = data.getUint8(0);
         const rate16Bits = flags & 0x1;
-        const result = {};
         let index = 1;
         if (rate16Bits) {
             result.heartRate = data.getUint16(index, /*littleEndian=*/true);

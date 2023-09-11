@@ -66,10 +66,16 @@ public class PrinterOption
     /// 0000fee7-0000-1000-8000-00805f9b34fb
     /// <para></para>
     /// 其他设备ServiceUUID:<para></para>
-    /// 'heart_rate'<para></para>
+    /// heart_rate 0x180D<para></para>
+    /// BATTERY_SERVICE   0x180F<para></para>
+    /// ALERT_NOTIFICATION_SERVICE   0x1811<para></para>
+    /// BLOOD_PRESSURE_SERVICE   0x1810<para></para>
+    /// RUNNING_SPEED_AND_CADENCE   0x1814<para></para>
+    /// CYCLING_SPEED_AND_CADENCE   0x1816<para></para>
     /// 0x1802<para></para>
     /// 0x1803<para></para>
     /// </summary>
+    /// <remarks>https://www.bluetooth.com/specifications/gatt/services</remarks>
     /// <returns></returns>
     [DisplayName("服务UUID / Service UUID")]
     public object? ServiceUuid { get; set; } = 0xff00;
@@ -78,8 +84,13 @@ public class PrinterOption
     public object? FiltersServices { get; set; } = null;
 
     /// <summary>
-    /// 特征UUID / Characteristic UUID
+    /// 特征UUID / Characteristic UUID<para></para>
+    /// heart_rate_measurement  0x2A37<para></para>
+    /// body_sensor_location  0x2A38<para></para>
+    /// heart_rate_control_point  0x2A39<para></para>
+    /// sensor_location  0x2A5D<para></para>
     /// </summary>
+    /// <remarks>https://blog.naver.com/geniusus/221761337501</remarks>
     /// <returns></returns>
     [DisplayName("特征UUID / Characteristic UUID")]
     public object? CharacteristicUuid { get; set; } = 0xff02;

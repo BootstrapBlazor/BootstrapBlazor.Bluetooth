@@ -124,9 +124,9 @@ export function notification(wrapper, element, callfunction = null, serviceUuid 
     function handleNotifications(event) {
         let value = event.target.value;
         let a = [];
-        // Convert raw data bytes to hex values just for the sake of showing something.
-        // In the "real" world, you'd use data.getUint8, data.getUint16 or even
-        // TextDecoder to process raw data bytes.
+        // 将原始数据字节转换为十六进制值只是为了显示某些内容。
+        // 在“真实”世界中，您可以使用 data.get Uint8、data.get Uint16 甚至
+        // 文本解码器处理原始数据字节。
         for (let i = 0; i < value.byteLength; i++) {
             a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
         }

@@ -15,7 +15,7 @@ namespace BootstrapBlazor.Components;
 /// </summary>
 public partial class BleNotification : IAsyncDisposable
 {
-    [Inject] IJSRuntime? JS { get; set; }
+    [Inject] private IJSRuntime? JS { get; set; }
     private IJSObjectReference? module;
     private DotNetObjectReference<BleNotification>? Instance { get; set; }
 
@@ -96,7 +96,7 @@ public partial class BleNotification : IAsyncDisposable
         {
             if (firstRender)
             {
-                Device??= new BluetoothDevice();
+                Device ??= new BluetoothDevice();
                 module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/BleNotification.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 Instance = DotNetObjectReference.Create(this);
             }
@@ -110,7 +110,7 @@ public partial class BleNotification : IAsyncDisposable
     /// <summary>
     /// 获取蓝牙低功耗设备BLE的特征通知
     /// </summary>
-    public virtual async Task GetNotification(object? serviceUuid ,object? characteristicUuid, bool autoConnect ,bool automaticComplement,bool advertisementReceived)
+    public virtual async Task GetNotification(object? serviceUuid, object? characteristicUuid, bool autoConnect, bool automaticComplement, bool advertisementReceived)
     {
         ServiceUuid = serviceUuid;
         CharacteristicUuid = characteristicUuid;

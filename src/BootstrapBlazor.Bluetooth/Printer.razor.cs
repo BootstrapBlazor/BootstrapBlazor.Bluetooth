@@ -16,7 +16,7 @@ namespace BootstrapBlazor.Components;
 /// </summary>
 public partial class Printer : IAsyncDisposable
 {
-    [Inject] private IJSRuntime? JS { get; set; }
+    [Inject] private IJSRuntime? JSRuntime { get; set; }
     private IJSObjectReference? Module { get; set; }
     private DotNetObjectReference<Printer>? InstancePrinter { get; set; }
 
@@ -99,7 +99,7 @@ PRINT
         {
             if (firstRender)
             {
-                Module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/Printer.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                Module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/Printer.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 await Module.InvokeVoidAsync("addScript", "./_content/BootstrapBlazor.Bluetooth/lib/gbk.min.js");
                 InstancePrinter = DotNetObjectReference.Create(this);
                 //可选设置初始搜索设备名称前缀,默认null

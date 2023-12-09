@@ -15,7 +15,7 @@ namespace BootstrapBlazor.Components;
 public partial class BatteryLevel : IAsyncDisposable
 {
     [Inject] private IJSRuntime? JS { get; set; }
-    private IJSObjectReference? module;
+    private IJSObjectReference? Module { get; set; }
     private DotNetObjectReference<BatteryLevel>? InstanceBatteryLevel { get; set; }
 
     /// <summary>
@@ -60,9 +60,9 @@ public partial class BatteryLevel : IAsyncDisposable
             if (firstRender)
             {
                 Device ??= new BluetoothDevice();
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/BatteryLevel.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                Module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/BatteryLevel.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 InstanceBatteryLevel = DotNetObjectReference.Create(this);
-                //await module.InvokeVoidAsync("getBatteryLevel", InstanceBatteryLevel, BatteryLevelElement);
+                //await Module.InvokeVoidAsync("getBatteryLevel", InstanceBatteryLevel, BatteryLevelElement);
             }
         }
         catch (Exception e)
@@ -78,7 +78,7 @@ public partial class BatteryLevel : IAsyncDisposable
     {
         try
         {
-            await module!.InvokeVoidAsync("getBatteryLevel", InstanceBatteryLevel, BatteryLevelElement);
+            await Module!.InvokeVoidAsync("getBatteryLevel", InstanceBatteryLevel, BatteryLevelElement);
         }
         catch (Exception e)
         {
@@ -89,9 +89,9 @@ public partial class BatteryLevel : IAsyncDisposable
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
         InstanceBatteryLevel?.Dispose();
-        if (module is not null)
+        if (Module is not null)
         {
-            await module.DisposeAsync();
+            await Module.DisposeAsync();
         }
     }
 

@@ -16,7 +16,7 @@ namespace BootstrapBlazor.Components;
 public partial class BleNotification : IAsyncDisposable
 {
     [Inject] private IJSRuntime? JS { get; set; }
-    private IJSObjectReference? module;
+    private IJSObjectReference? Module { get; set; }
     private DotNetObjectReference<BleNotification>? Instance { get; set; }
 
     /// <summary>
@@ -97,7 +97,7 @@ public partial class BleNotification : IAsyncDisposable
             if (firstRender)
             {
                 Device ??= new BluetoothDevice();
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/BleNotification.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                Module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/BleNotification.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 Instance = DotNetObjectReference.Create(this);
             }
         }
@@ -127,7 +127,7 @@ public partial class BleNotification : IAsyncDisposable
     {
         try
         {
-            await module!.InvokeVoidAsync("notification", Instance, Element, "getNotification", ServiceUuid, CharacteristicUuid, AutoConnect, AutomaticComplement, AdvertisementReceived);
+            await Module!.InvokeVoidAsync("notification", Instance, Element, "getNotification", ServiceUuid, CharacteristicUuid, AutoConnect, AutomaticComplement, AdvertisementReceived);
         }
         catch (Exception e)
         {
@@ -142,7 +142,7 @@ public partial class BleNotification : IAsyncDisposable
     {
         try
         {
-            await module!.InvokeVoidAsync("notification", Instance, Element, "stopNotification");
+            await Module!.InvokeVoidAsync("notification", Instance, Element, "stopNotification");
         }
         catch (Exception e)
         {
@@ -157,7 +157,7 @@ public partial class BleNotification : IAsyncDisposable
     {
         try
         {
-            await module!.InvokeVoidAsync("scan", Instance);
+            await Module!.InvokeVoidAsync("scan", Instance);
         }
         catch (Exception e)
         {
@@ -168,9 +168,9 @@ public partial class BleNotification : IAsyncDisposable
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
         Instance?.Dispose();
-        if (module is not null)
+        if (Module is not null)
         {
-            await module.DisposeAsync();
+            await Module.DisposeAsync();
         }
     }
 

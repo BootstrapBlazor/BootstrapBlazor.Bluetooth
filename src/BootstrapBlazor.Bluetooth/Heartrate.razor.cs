@@ -15,7 +15,7 @@ namespace BootstrapBlazor.Components;
 public partial class Heartrate : IAsyncDisposable
 {
     [Inject] private IJSRuntime? JS { get; set; }
-    private IJSObjectReference? module;
+    private IJSObjectReference? Module { get; set; }
     private DotNetObjectReference<Heartrate>? InstanceHeartrate { get; set; }
 
     /// <summary>
@@ -60,7 +60,7 @@ public partial class Heartrate : IAsyncDisposable
             if (firstRender)
             {
                 Device ??= new BluetoothDevice();
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/Heartrate.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                Module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/Heartrate.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 InstanceHeartrate = DotNetObjectReference.Create(this);
             }
         }
@@ -77,7 +77,7 @@ public partial class Heartrate : IAsyncDisposable
     {
         try
         {
-            await module!.InvokeVoidAsync("heartrate", InstanceHeartrate, HeartrateElement, "getHeartrate");
+            await Module!.InvokeVoidAsync("heartrate", InstanceHeartrate, HeartrateElement, "getHeartrate");
         }
         catch (Exception e)
         {
@@ -92,7 +92,7 @@ public partial class Heartrate : IAsyncDisposable
     {
         try
         {
-            await module!.InvokeVoidAsync("heartrate", InstanceHeartrate, HeartrateElement, "stopHeartrate");
+            await Module!.InvokeVoidAsync("heartrate", InstanceHeartrate, HeartrateElement, "stopHeartrate");
         }
         catch (Exception e)
         {
@@ -103,9 +103,9 @@ public partial class Heartrate : IAsyncDisposable
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
         InstanceHeartrate?.Dispose();
-        if (module is not null)
+        if (Module is not null)
         {
-            await module.DisposeAsync();
+            await Module.DisposeAsync();
         }
     }
 

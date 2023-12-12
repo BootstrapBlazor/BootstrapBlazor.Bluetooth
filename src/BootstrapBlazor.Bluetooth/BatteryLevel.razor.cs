@@ -6,6 +6,7 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BootstrapBlazor.Components;
 
@@ -14,14 +15,17 @@ namespace BootstrapBlazor.Components;
 /// </summary>
 public partial class BatteryLevel : IAsyncDisposable
 {
-    [Inject] private IJSRuntime? JSRuntime { get; set; }
+    [Inject]
+    [NotNull]
+    private IJSRuntime? JSRuntime { get; set; }
+
     private IJSObjectReference? Module { get; set; }
-    private DotNetObjectReference<BatteryLevel>? InstanceBatteryLevel { get; set; }
+    private DotNetObjectReference<BatteryLevel>? Instance { get; set; }
 
     /// <summary>
     /// UI界面元素的引用对象
     /// </summary>
-    public ElementReference BatteryLevelElement { get; set; }
+    public ElementReference Element { get; set; }
 
     /// <summary>
     /// 获得/设置 蓝牙设备
@@ -61,7 +65,7 @@ public partial class BatteryLevel : IAsyncDisposable
             {
                 Device ??= new BluetoothDevice();
                 Module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/BatteryLevel.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
-                InstanceBatteryLevel = DotNetObjectReference.Create(this);
+                Instance = DotNetObjectReference.Create(this);
                 //await Module.InvokeVoidAsync("getBatteryLevel", InstanceBatteryLevel, BatteryLevelElement);
             }
         }
@@ -78,7 +82,7 @@ public partial class BatteryLevel : IAsyncDisposable
     {
         try
         {
-            await Module!.InvokeVoidAsync("getBatteryLevel", InstanceBatteryLevel, BatteryLevelElement);
+            await Module!.InvokeVoidAsync("getBatteryLevel", Instance, Element);
         }
         catch (Exception e)
         {
@@ -88,7 +92,7 @@ public partial class BatteryLevel : IAsyncDisposable
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
-        InstanceBatteryLevel?.Dispose();
+        Instance?.Dispose();
         if (Module is not null)
         {
             await Module.DisposeAsync();

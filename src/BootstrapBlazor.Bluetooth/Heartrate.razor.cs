@@ -6,6 +6,7 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BootstrapBlazor.Components;
 
@@ -14,14 +15,17 @@ namespace BootstrapBlazor.Components;
 /// </summary>
 public partial class Heartrate : IAsyncDisposable
 {
-    [Inject] private IJSRuntime? JSRuntime { get; set; }
+    [Inject]
+    [NotNull]
+    private IJSRuntime? JSRuntime { get; set; }
+
     private IJSObjectReference? Module { get; set; }
-    private DotNetObjectReference<Heartrate>? InstanceHeartrate { get; set; }
+    private DotNetObjectReference<Heartrate>? Instance { get; set; }
 
     /// <summary>
     /// UI界面元素的引用对象
     /// </summary>
-    public ElementReference HeartrateElement { get; set; }
+    public ElementReference Element { get; set; }
 
     /// <summary>
     /// 获得/设置 蓝牙设备
@@ -61,7 +65,7 @@ public partial class Heartrate : IAsyncDisposable
             {
                 Device ??= new BluetoothDevice();
                 Module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/Heartrate.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
-                InstanceHeartrate = DotNetObjectReference.Create(this);
+                Instance = DotNetObjectReference.Create(this);
             }
         }
         catch (Exception e)
@@ -77,7 +81,7 @@ public partial class Heartrate : IAsyncDisposable
     {
         try
         {
-            await Module!.InvokeVoidAsync("heartrate", InstanceHeartrate, HeartrateElement, "getHeartrate");
+            await Module!.InvokeVoidAsync("heartrate", Instance, Element, "getHeartrate");
         }
         catch (Exception e)
         {
@@ -92,7 +96,7 @@ public partial class Heartrate : IAsyncDisposable
     {
         try
         {
-            await Module!.InvokeVoidAsync("heartrate", InstanceHeartrate, HeartrateElement, "stopHeartrate");
+            await Module!.InvokeVoidAsync("heartrate", Instance, Element, "stopHeartrate");
         }
         catch (Exception e)
         {
@@ -102,7 +106,7 @@ public partial class Heartrate : IAsyncDisposable
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
-        InstanceHeartrate?.Dispose();
+        Instance?.Dispose();
         if (Module is not null)
         {
             await Module.DisposeAsync();

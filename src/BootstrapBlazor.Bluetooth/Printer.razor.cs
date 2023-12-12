@@ -16,14 +16,17 @@ namespace BootstrapBlazor.Components;
 /// </summary>
 public partial class Printer : IAsyncDisposable
 {
-    [Inject] private IJSRuntime? JSRuntime { get; set; }
+    [Inject]
+    [NotNull]
+    private IJSRuntime? JSRuntime { get; set; }
+
     private IJSObjectReference? Module { get; set; }
-    private DotNetObjectReference<Printer>? InstancePrinter { get; set; }
+    private DotNetObjectReference<Printer>? Instance { get; set; }
 
     /// <summary>
     /// UI界面元素的引用对象
     /// </summary>
-    public ElementReference PrinterElement { get; set; }
+    public ElementReference Element { get; set; }
 
     /// <summary>
     /// 获得/设置 打印按钮文字 默认为 打印
@@ -101,14 +104,14 @@ PRINT
             {
                 Module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.Bluetooth/Printer.razor.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 await Module.InvokeVoidAsync("addScript", "./_content/BootstrapBlazor.Bluetooth/lib/gbk.min.js");
-                InstancePrinter = DotNetObjectReference.Create(this);
+                Instance = DotNetObjectReference.Create(this);
                 //可选设置初始搜索设备名称前缀,默认null
                 //Opt.NamePrefix = "BMAU";
                 //可选设置服务UUID/ServiceUUID,默认0xff00.[非空!]
                 //Opt.ServiceUuid = "e7810a71-73ae-499d-8c15-faa9aef0c3f2";
                 //Opt.FiltersServices =new object[] { 0xff00, 0xfee7, "e7810a71-73ae-499d-8c15-faa9aef0c3f2" };
                 Opt.ServiceUuid = Opt.ServiceUuid ?? 0xff00;
-                await Module.InvokeVoidAsync("printFunction", InstancePrinter, PrinterElement, Opt);
+                await Module.InvokeVoidAsync("printFunction", Instance, Element, Opt);
             }
         }
         catch (Exception e)
@@ -124,7 +127,7 @@ PRINT
     {
         try
         {
-            await Module!.InvokeVoidAsync("printFunction", InstancePrinter, PrinterElement, Opt, "write", Commands);
+            await Module!.InvokeVoidAsync("printFunction", Instance, Element, Opt, "write", Commands);
         }
         catch (Exception e)
         {
@@ -134,7 +137,7 @@ PRINT
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
-        InstancePrinter?.Dispose();
+        Instance?.Dispose();
         if (Module is not null)
         {
             await Module.DisposeAsync();
@@ -200,7 +203,7 @@ PRINT
         try
         {
             if (devicename != null) Opt.Devicename = devicename;
-            await Module!.InvokeVoidAsync("connectdevice", InstancePrinter, PrinterElement, Opt, Commands);
+            await Module!.InvokeVoidAsync("connectdevice", Instance, Element, Opt, Commands);
         }
         catch (Exception e)
         {
